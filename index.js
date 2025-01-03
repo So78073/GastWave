@@ -7,7 +7,7 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'public/index.html'));
+    res.status(200).json('Welcome, your app is working well - a');
   });
 
 app.listen(PORT, () => {
