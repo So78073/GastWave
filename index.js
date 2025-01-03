@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
+const PORT = 4000;
 
 // Middleware para parsing de JSON no body
 app.use(express.json());
@@ -9,7 +10,7 @@ app.use(express.json());
 // Caminho do arquivo user.json
 const usersFilePath = path.join(__dirname, 'user.json');
 
-// Função para carregar usuários
+// Função para carregar os usuários
 const loadUsers = () => {
   try {
     const data = fs.readFileSync(usersFilePath, 'utf8');
@@ -20,13 +21,17 @@ const loadUsers = () => {
   }
 };
 
-// Rota principal
-app.get('/', (req, res) => {
-  res.status(200).json('Welcome, your app is working well - a');
-});
+// Função para salvar os usuários no arquivo
+const saveUsers = (users) => {
+  try {
+    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
+  } catch (err) {
+    console.error('Erro ao salvar o arquivo user.json:', err);
+  }
+};
 
-// Rota de login
-app.post('/login', (req, res) => {
+// Rota para adicionar um novo usuário
+app.post('/add-user', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -34,19 +39,30 @@ app.post('/login', (req, res) => {
   }
 
   const users = loadUsers();
-  const user = users.find(
-    (user) => user.username === username && user.password === password
-  );
-
-  if (user) {
-    return res.status(200).json({ message: 'Login successful', userId: user.id });
-  } else {
-    return res.status(401).json({ message: 'Invalid username or password' });
+  
+  // Verificar se o usuário já existe
+  const userExists = users.find((user) => user.username === username);
+  
+  if (userExists) {
+    return res.status(400).json({ message: 'Username already exists' });
   }
+
+  // Adiciona o novo usuário ao array
+  const newUser = {
+    id: users.length + 1, // Gerar um ID único
+    username,
+    password,
+  };
+  
+  users.push(newUser);
+  
+  // Salva os usuários no arquivo
+  saveUsers(users);
+
+  return res.status(201).json({ message: 'User added successfully', userId: newUser.id });
 });
 
 // Inicializa o servidor
-const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
