@@ -1,5 +1,27 @@
 [
-    { "id": 1, "username": "admin", "password": "777666888", "message": "Welcome, admin!" },
-    { "id": 2, "username": "Jhon", "password": "miraTorta", "message": "Welcome, Jhon!" },
-    { "id": 3, "username": "gimbra", "password": "123123123", "message": "Welcome, gimbra!" }
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "777666888",
+      "messages": [
+        { "date": "2025-01-03T12:00:00.000Z", "message": "Welcome, admin!" }
+      ]
+    },
+    {
+      "id": 2,
+      "username": "Jhon",
+      "password": "miraTorta",
+      "messages": [
+        { "date": "2025-01-03T12:00:00.000Z", "message": "Welcome, Jhon!" }
+      ]
+    },
+    {
+      "id": 3,
+      "username": "gimbra",
+      "password": "123123123",
+      "messages": [
+        { "date": "2025-01-03T12:00:00.000Z", "message": "Welcome, gimbra!" }
+      ]
+    }
   ]
+  
