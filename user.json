@@ -1,5 +1,6 @@
-[
-    { "id": 1, "username": "admin", "password": "777666888" },
-    { "id": 2, "username": "Jhon", "password": "miraTorta" },
-    { "id": 2, "username": "gimbra", "password": "123123123" }
-  ]
+{
+    "username": "adm",
+    "password": "123123",
+    "message": "Shizu :)"
+  }
+  

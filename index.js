@@ -4,10 +4,8 @@ const path = require('path');
 const app = express();
 const PORT = 4000;
 
-// Middleware para parsing de JSON no body
-app.use(express.json());
+app.use(express.json());  // Permitir o corpo da requisição em formato JSON
 
-// Caminho do arquivo user.json
 const usersFilePath = path.join(__dirname, 'user.json');
 
 // Função para carregar os usuários
@@ -30,17 +28,18 @@ const saveUsers = (users) => {
   }
 };
 
-// Rota para adicionar um novo usuário
+// Rota para adicionar um novo usuário com mensagem
 app.post('/add-user', (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, message } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password are required' });
+  // Verifica se os campos obrigatórios existem
+  if (!username || !password || !message) {
+    return res.status(400).json({ message: 'Username, password and message are required' });
   }
 
   const users = loadUsers();
-  
-  // Verificar se o usuário já existe
+
+  // Verifica se o usuário já existe
   const userExists = users.find((user) => user.username === username);
   
   if (userExists) {
@@ -52,6 +51,7 @@ app.post('/add-user', (req, res) => {
     id: users.length + 1, // Gerar um ID único
     username,
     password,
+    message // Armazena a mensagem personalizada do usuário
   };
   
   users.push(newUser);
@@ -62,7 +62,6 @@ app.post('/add-user', (req, res) => {
   return res.status(201).json({ message: 'User added successfully', userId: newUser.id });
 });
 
-// Inicializa o servidor
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
