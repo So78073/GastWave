@@ -1,6 +1,5 @@
-{
-    "username": "adm",
-    "password": "123123",
-    "message": "Shizu :)"
-  }
-  
+[
+    { "id": 1, "username": "admin", "password": "777666888", "message": "Welcome, admin!" },
+    { "id": 2, "username": "Jhon", "password": "miraTorta", "message": "Welcome, Jhon!" },
+    { "id": 3, "username": "gimbra", "password": "123123123", "message": "Welcome, gimbra!" }
+  ]
